@@ -6,10 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -23,27 +21,83 @@ public class QuizQuestion {
     private long id;
     private QuizType type;
     private String Question;
-    private String response;
+    @Column
+    @ElementCollection(targetClass = String.class)
+    private List<String> answers;
+    private String correctAnswer;
     private int point;
 
 
 //    ++++++++++++++++ Constructor ++++++++++++++++++++++
 
-    public QuizQuestion(QuizType type, String question, String response, int point) {
+
+    public QuizQuestion(QuizType type, String question, List<String> answers, String correctAnswer, int point) {
         this.type = type;
         Question = question;
-        this.response = response;
+        this.answers = answers;
+        this.correctAnswer = correctAnswer;
         this.point = point;
     }
 
-    public QuizQuestion(String question, String response) {
+    public QuizQuestion(String question, List<String> answers) {
         Question = question;
-        this.response = response;
+        this.answers = answers;
     }
 
-    public QuizQuestion(QuizType type, String question, String response) {
-        this.type = type;
+    public QuizQuestion(String question, String correctAnswer, int point) {
         Question = question;
-        this.response = response;
+        this.correctAnswer = correctAnswer;
+        this.point = point;
+    }
+
+//    ++++++++++++++++ Getters & Setters ++++++++++++++++++++++
+
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public QuizType getType() {
+        return type;
+    }
+
+    public void setType(QuizType type) {
+        this.type = type;
+    }
+
+    public String getQuestion() {
+        return Question;
+    }
+
+    public void setQuestion(String question) {
+        Question = question;
+    }
+
+    public List<String> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<String> answers) {
+        this.answers = answers;
+    }
+
+    public String getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    public void setCorrectAnswer(String correctAnswer) {
+        this.correctAnswer = correctAnswer;
+    }
+
+    public int getPoint() {
+        return point;
+    }
+
+    public void setPoint(int point) {
+        this.point = point;
     }
 }

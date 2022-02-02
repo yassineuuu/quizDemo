@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class QuizQuestionServiceImp implements QuizQuestionService {
@@ -25,26 +26,35 @@ public class QuizQuestionServiceImp implements QuizQuestionService {
 
     @Override
     public List<QuizQuestion> findAllQuestions() {
-        return null;
+        return (List<QuizQuestion>) quizQuestionRepo.findAll();
     }
 
     @Override
-    public List<QuizQuestion> findQuestionByType(QuizType type) {
-        return null;
+    public List<QuizQuestion> findQuestionByType(String type) {
+        return (List<QuizQuestion>) quizQuestionRepo.findByType(QuizType.valueOf(type.toUpperCase(Locale.ROOT)));
     }
 
     @Override
     public List<QuizQuestion> findQuestionByPoint(int point) {
-        return null;
+        return (List<QuizQuestion>) quizQuestionRepo.findByPoint(point);
     }
 
     @Override
-    public QuizQuestion updateQuizQuestion(long id, QuizQuestion quizQuestion) {
-        return null;
+    public QuizQuestion updateQuizQuestion(long id, QuizQuestion newQuizQuestion) {
+        QuizQuestion question = quizQuestionRepo.findById(id).get();
+        question.setType(newQuizQuestion.getType());
+        question.setQuestion(newQuizQuestion.getQuestion());
+        question.setAnswers(newQuizQuestion.getAnswers());
+        question.setCorrectAnswer(newQuizQuestion.getCorrectAnswer());
+        question.setPoint(newQuizQuestion.getPoint());
+
+        quizQuestionRepo.save(question);
+
+        return question;
     }
 
     @Override
     public void deleteQuizQuestion(long id) {
-
+        quizQuestionRepo.deleteById(id);
     }
 }

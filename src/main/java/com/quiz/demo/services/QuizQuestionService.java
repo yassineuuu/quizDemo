@@ -13,7 +13,7 @@ public interface QuizQuestionService {
 
     List<QuizQuestion> findAllQuestions();
 
-    List<QuizQuestion> findQuestionByType(QuizType type);
+    List<QuizQuestion> findQuestionByType(String type);
 
     List<QuizQuestion> findQuestionByPoint(int point);
 
