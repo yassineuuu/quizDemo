@@ -9,6 +9,10 @@ import java.util.List;
 public interface UserService {
     User addUser(User user);
 
+    User findUserById(long id);
+
+//    User findUserByUuid(String Uuid);
+
     List<User> findAllUsers();
 
     List<User> findUserByEmailLike(String email);
